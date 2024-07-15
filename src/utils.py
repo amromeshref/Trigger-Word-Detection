@@ -10,6 +10,9 @@ from scipy.io import wavfile
 from scipy.signal import spectrogram
 import matplotlib.pyplot as plt
 import numpy as np
+import yaml
+
+CONFIG_FILE_PATH = os.path.join(REPO_DIR_PATH, "config.yaml")
 
 
 def get_wav_info(wav_file: str) -> tuple[int, np.ndarray]:
@@ -66,3 +69,15 @@ def plot_spectrogram(freqs: np.ndarray, times: np.ndarray, spectrogram_matrix: n
     plt.title("Spectrogram")
     plt.colorbar(label="Intensity [dB]")
     plt.show()
+
+def load_config() -> dict:
+    """
+    This function will load the yaml configuration file.
+    input: 
+        None
+    output:
+        config: configuration file
+    """
+    with open(CONFIG_FILE_PATH) as file:
+        config = yaml.safe_load(file)
+        return config
