@@ -139,8 +139,8 @@ class DataTransformer():
         # Initialize y (label vector) of zeros
         y = np.zeros((1, self.Ty))
 
-        # Select 0-4 random "positive" audio clips from the list of "positives"
-        number_of_positives = np.random.randint(0, 5)
+        # Select 0-2 random "positive" audio clips from the list of "positives"
+        number_of_positives = np.random.randint(0, 3)
 
         # Select 0-2 random "negative" audio clips from the list of "negatives"
         number_of_negatives = np.random.randint(0, 3)
