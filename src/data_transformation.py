@@ -11,6 +11,17 @@ import pydub
 import numpy as np
 import argparse
 
+# Define the default number of training examples
+NUM_TRAINING_EXAMPLES = 10
+
+# Define the maximum number of trials to prevent infinite loops
+MAX_TRIALS = 300
+
+# Define the maximum number of positive audio clips to insert in a single training example
+MAX_NUM_POSITIVES = 2
+
+# Define the maximum number of negative audio clips to insert in a single training example
+MAX_NUM_NEGATIVES = 2
 
 class DataTransformer():
     def __init__(self) -> None:
@@ -140,10 +151,10 @@ class DataTransformer():
         y = np.zeros((1, self.Ty))
 
         # Select 0-2 random "positive" audio clips from the list of "positives"
-        number_of_positives = np.random.randint(0, 3)
+        number_of_positives = np.random.randint(0, MAX_NUM_POSITIVES+1)
 
         # Select 0-2 random "negative" audio clips from the list of "negatives"
-        number_of_negatives = np.random.randint(0, 3)
+        number_of_negatives = np.random.randint(0, MAX_NUM_NEGATIVES+1)
 
         for _ in range(number_of_positives):
             # Select a random positive audio clip
@@ -154,8 +165,11 @@ class DataTransformer():
             audio_duration_ms = int(random_positive.duration_seconds * 1000)
 
             # Check if the audio clip is overlapping with previous segments
+            cnt = 0
             if len(previous_segments) > 0:
                 while True:
+                    if cnt == MAX_TRIALS:
+                        break
                     segment_time = self.get_random_time_segment(
                         audio_duration_ms)
                     OVERLAPPING = False
@@ -165,6 +179,7 @@ class DataTransformer():
                             break
                     if not OVERLAPPING:
                         break
+                    cnt += 1
 
             else:
                 segment_time = self.get_random_time_segment(audio_duration_ms)
@@ -188,8 +203,11 @@ class DataTransformer():
             audio_duration_ms = int(random_negative.duration_seconds * 1000)
 
             # Check if the audio clip is overlapping with previous segments
+            cnt = 0
             if len(previous_segments) > 0:
                 while True:
+                    if cnt == MAX_TRIALS:
+                        break
                     segment_time = self.get_random_time_segment(
                         audio_duration_ms)
                     OVERLAPPING = False
@@ -199,6 +217,7 @@ class DataTransformer():
                             break
                     if not OVERLAPPING:
                         break
+                    cnt += 1
             else:
                 segment_time = self.get_random_time_segment(audio_duration_ms)
 
@@ -280,7 +299,7 @@ class DataTransformer():
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--num_examples", type=int, default=1000,
+    parser.add_argument("--num_examples", type=int, default=NUM_TRAINING_EXAMPLES,
                         help="Number of training examples to generate")
     args = parser.parse_args()
 
