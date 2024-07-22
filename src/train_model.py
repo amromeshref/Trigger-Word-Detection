@@ -53,7 +53,7 @@ class ModelTrainer:
 
         # Reshape the data and split it into training and testing sets
         X = np.array(X)
-        X = X.reshape((X.shape[0],X.shape[2],X.shape[1]))
+        X = X.swapaxes(1,2)
         Y = np.array(Y)
         Y = Y.reshape((len(data),Y.shape[2],1))
         X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.2, random_state=42)
