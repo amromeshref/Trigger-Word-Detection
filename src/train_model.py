@@ -11,7 +11,12 @@ import tensorflow as tf
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv1D, Dense, GRU, Dropout, BatchNormalization, TimeDistributed, Activation
 from tensorflow.keras.optimizers import Adam
+from datetime import datetime
+import argparse
 
+# Define the default hyperparameters
+NUM_EPOCHS = 100
+BATCH_SIZE = 64
 
 class ModelTrainer:
     def __init__(self):
@@ -53,7 +58,7 @@ class ModelTrainer:
         X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.2, random_state=42)
         return (X_train, X_test, y_train, y_test)
     
-    def create_model(input_shape: tuple[int,int]) -> tf.keras.Model:
+    def create_model(self, input_shape: tuple[int,int]) -> tf.keras.Model:
         """
         Create the model
         Args:
@@ -80,4 +85,32 @@ class ModelTrainer:
         )
         return model
     
-    
+    def train(self, batch_size: int = BATCH_SIZE, epochs: int = NUM_EPOCHS) -> None:
+        """
+        Train the model
+        Args:
+            batch_size (int): Batch size
+            epochs (int): Number of epochs
+        Returns:
+            None
+        """
+        data = self.load_data()
+        X_train, X_test, y_train, y_test = self.split_data(data)
+        input_shape = (X_train.shape[1], X_train.shape[2])
+        model = self.create_model(input_shape)
+        opt = Adam(learning_rate=1e-6, beta_1=0.9, beta_2=0.999)
+        model.compile(loss='binary_crossentropy', optimizer=opt, metrics=["accuracy"])    
+        model.fit(X_train, y_train, epochs=epochs, batch_size=batch_size)
+        current_time = datetime.now().strftime("%Y-%m-%d-%I-%M-%S")
+        model.save(os.path.join(REPO_DIR_PATH, "models", "trained-models", f"model_{current_time}.h5"))
+        print("Model trained and saved successfully at", os.path.join(REPO_DIR_PATH, "models", "trained-models", f"model_{current_time}.h5"))
+        print("Model evaluation:")
+        print(model.evaluate(X_test, y_test))
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Train the model")
+    parser.add_argument("--batch_size", type=int, default=BATCH_SIZE, help="Batch size")
+    parser.add_argument("--epochs", type=int, default=NUM_EPOCHS, help="Number of epochs")
+    args = parser.parse_args()
+    trainer = ModelTrainer()
+    trainer.train(args.batch_size, args.epochs)
