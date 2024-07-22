@@ -11,11 +11,12 @@ from scipy.signal import spectrogram
 import matplotlib.pyplot as plt
 import numpy as np
 import yaml
+from typing import Tuple
 
 CONFIG_FILE_PATH = os.path.join(REPO_DIR_PATH, "config.yaml")
 
 
-def get_wav_info(wav_file: str) -> tuple[int, np.ndarray]:
+def get_wav_info(wav_file: str) -> Tuple[int, np.ndarray]:
     """
     Get the sampling rate and data from a WAV file
     Args:
@@ -28,7 +29,7 @@ def get_wav_info(wav_file: str) -> tuple[int, np.ndarray]:
     rate, data = wavfile.read(wav_file)
     return rate, data
 
-def compute_spectrogram(wav_file: str) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+def compute_spectrogram(wav_file: str) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
     """
     Compute the spectrogram of a WAV file
     Args:
