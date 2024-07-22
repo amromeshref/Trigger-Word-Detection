@@ -13,6 +13,7 @@ from tensorflow.keras.layers import Conv1D, Dense, GRU, Dropout, BatchNormalizat
 from tensorflow.keras.optimizers import Adam
 from datetime import datetime
 import argparse
+from typing import Tuple
 
 # Define the default hyperparameters
 NUM_EPOCHS = 100
@@ -34,7 +35,7 @@ class ModelTrainer:
         data = np.load(DATA_PATH, allow_pickle=True)
         return data
     
-    def split_data(self, data: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    def split_data(self, data: np.ndarray) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
         """
         Split the data into training and testing sets
         Args:
@@ -58,7 +59,7 @@ class ModelTrainer:
         X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.2, random_state=42)
         return (X_train, X_test, y_train, y_test)
     
-    def create_model(self, input_shape: tuple[int,int]) -> tf.keras.Model:
+    def create_model(self, input_shape: Tuple[int,int]) -> tf.keras.Model:
         """
         Create the model
         Args:
@@ -104,8 +105,10 @@ class ModelTrainer:
         current_time = datetime.now().strftime("%Y-%m-%d-%I-%M-%S")
         model.save(os.path.join(REPO_DIR_PATH, "models", "trained-models", f"model_{current_time}.h5"))
         print("Model trained and saved successfully at", os.path.join(REPO_DIR_PATH, "models", "trained-models", f"model_{current_time}.h5"))
+        loss, acc = model.evaluate(X_test, y_test)
         print("Model evaluation:")
-        print(model.evaluate(X_test, y_test))
+        print("Loss:", loss)
+        print("Accuracy:", acc)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Train the model")
