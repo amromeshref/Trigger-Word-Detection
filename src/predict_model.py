@@ -108,7 +108,14 @@ class ModelPredictor():
         audio, X = self.data_preprocessing(wav_file)
         return (audio, self.model.predict(X))
     
-    def chime_on_activate(self, wav_file: str):
+    def chime_on_activate(self, wav_file: str) -> pydub.audio_segment.AudioSegment:
+        """
+        Superpose a chime sound when the model detects an activation
+        Args:
+            wav_file (str): Path to the WAV file
+        Returns:
+            pydub.audio_segment.AudioSegment: Audio segment with the chime sound superposed
+        """
         audio_clip = pydub.AudioSegment.from_wav(wav_file)
         chime_file_path = os.path.join(REPO_DIR_PATH, "data", "external", "chime.wav")
         chime = pydub.AudioSegment.from_wav(chime_file_path)
