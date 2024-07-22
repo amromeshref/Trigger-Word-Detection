@@ -1,2 +1,4 @@
 src/__pycache__
 notebooks/.ipynb_checkpoints
+src/test.py
+data/processed/training_data.npy
