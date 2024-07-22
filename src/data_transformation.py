@@ -10,6 +10,8 @@ import matplotlib.pyplot as plt
 import pydub
 import numpy as np
 import argparse
+from typing import Tuple, List
+
 
 # Define the default number of training examples
 NUM_TRAINING_EXAMPLES = 10
@@ -23,13 +25,14 @@ MAX_NUM_POSITIVES = 2
 # Define the maximum number of negative audio clips to insert in a single training example
 MAX_NUM_NEGATIVES = 2
 
+
 class DataTransformer():
     def __init__(self) -> None:
         self.config = load_config()
         self.background_max_time_ms = self.config["background_max_time_ms"]
         self.Ty = self.config["Ty"]
 
-    def load_data(self) -> tuple[list[pydub.audio_segment.AudioSegment], list[pydub.audio_segment.AudioSegment], list[pydub.audio_segment.AudioSegment]]:
+    def load_data(self) -> Tuple[List[pydub.audio_segment.AudioSegment], List[pydub.audio_segment.AudioSegment], List[pydub.audio_segment.AudioSegment]]:
         """
         Load the audio data
         Args:
@@ -63,7 +66,7 @@ class DataTransformer():
 
         return backgrounds, positives, negatives
 
-    def get_random_time_segment(self, segment_duration_ms: int) -> tuple[int, int]:
+    def get_random_time_segment(self, segment_duration_ms: int) -> Tuple[int, int]:
         """
         Gets a random time segment of duration segment_duration_ms in a 10,000 ms audio clip.
         Args:
@@ -78,7 +81,7 @@ class DataTransformer():
         segment_end = segment_start + segment_duration_ms - 1
         return (segment_start, segment_end)
 
-    def is_overlapping(self, segment1: tuple[int, int], segment2: tuple[int, int]) -> bool:
+    def is_overlapping(self, segment1: Tuple[int, int], segment2: Tuple[int, int]) -> bool:
         """
         Check if two segments overlap
         Args:
@@ -123,7 +126,7 @@ class DataTransformer():
                 y[0, i] = 1
         return y
 
-    def create_training_example(self, backgrounds: pydub.audio_segment.AudioSegment, positives: list[pydub.audio_segment.AudioSegment], negatives: list[pydub.audio_segment.AudioSegment]) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, pydub.audio_segment.AudioSegment]:
+    def create_training_example(self, backgrounds: pydub.audio_segment.AudioSegment, positives: List[pydub.audio_segment.AudioSegment], negatives: List[pydub.audio_segment.AudioSegment]) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, pydub.audio_segment.AudioSegment]:
         """
         Create a training example
         Args:
@@ -239,7 +242,7 @@ class DataTransformer():
 
         return (freqs, times, background, X, y)
 
-    def generate_training_data(self, num_examples: int) -> list[tuple[np.ndarray, np.ndarray]]:
+    def generate_training_data(self, num_examples: int) -> List[Tuple[np.ndarray, np.ndarray]]:
         """
         Generate training data
         Args:
@@ -255,7 +258,7 @@ class DataTransformer():
             training_data.append((X, y))
         return training_data
 
-    def save_training_data(self, training_data: list[tuple[np.ndarray, np.ndarray]]) -> None:
+    def save_training_data(self, training_data: List[Tuple[np.ndarray, np.ndarray]]) -> None:
         """
         Save the training data in the form of numpy arrays
         Args:
