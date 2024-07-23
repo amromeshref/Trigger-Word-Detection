@@ -101,6 +101,25 @@ ___
 
 ## Usage
 
+To detect the trigger word "activate" and superimpose a chime sound at the detected locations:
+- Ensure the input audio file is in `wav` format.
+```python
+from src.predict_model import ModelPredictor
+
+# Initialize the predictor
+predictor = ModelPredictor()
+
+# Example audio 
+wav_file = "data/external/positive/3_act2.wav"
+
+# Add a chime sound to the audio file at points where the word "activate" is detected
+modified_audio = predictor.chime_on_activate(wav_file)
+
+# Save the modified audio
+modified_audio.export("modified_audio.wav", format="wav")
+```
+
+
 ## Requirements
 
 - Python 3.x
