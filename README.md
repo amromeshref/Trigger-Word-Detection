@@ -77,7 +77,7 @@ The goal is to build a network that ingests a spectrogram and outputs a signal w
 3. **Dense Layer with Sigmoid Activation**:
    - **Purpose**: Makes a prediction for $y^{\langle t \rangle}$. The sigmoid output estimates the probability of the output being 1, indicating the trigger word "activate" was recently spoken.
   
-
+___
 
 ## Usage
 
