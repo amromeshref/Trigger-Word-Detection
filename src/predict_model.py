@@ -110,7 +110,7 @@ class ModelPredictor():
     
     def chime_on_activate(self, wav_file: str) -> pydub.audio_segment.AudioSegment:
         """
-        Superpose a chime sound when the model detects an activation
+        Superpose a chime sound when the model detects the word "activate"
         Args:
             wav_file (str): Path to the WAV file
         Returns:
