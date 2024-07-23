@@ -5,6 +5,7 @@
 This project involves developing an AI model to detect the trigger word "activate" from audio recordings. 
 The model is designed to analyze spectrogram representations of the audio data to determine if the trigger word is present.
 ___
+
 ## Table of Contents
 1. [Data](#data)
 1. [Spectrogram](#spectrogram)
@@ -12,7 +13,7 @@ ___
 1. [Model Architecture](#model-architecture)
 1. [Usage](#usage)
 
-__
+___
 
 ## Data
 
