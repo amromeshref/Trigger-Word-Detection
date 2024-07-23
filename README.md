@@ -2,8 +2,8 @@
 
 ## Overview
 
-This project involves developing an AI model to detect the trigger word "activate" from audio recordings. 
-The model is designed to analyze spectrogram representations of the audio data to determine if the trigger word is present.
+This project focuses on applying deep learning techniques to speech recognition. The primary goal was to gain hands-on experience in structuring a speech recognition project and to master the processes involved in synthesizing and processing audio recordings to create training and development datasets. By building and refining a model to detect the trigger word "activate," this project demonstrates practical applications of deep learning in the field of speech recognition.
+
 ___
 
 ## Table of Contents
