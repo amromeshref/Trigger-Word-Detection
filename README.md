@@ -4,6 +4,15 @@
 
 This project involves developing an AI model to detect the trigger word "activate" from audio recordings. 
 The model is designed to analyze spectrogram representations of the audio data to determine if the trigger word is present.
+___
+## Table of Contents
+1. [Data](#data)
+1. [Spectrogram](#spectrogram)
+1. [Generating a Single Training Example](#generating-a-single-training-example)
+1. [Model Architecture](#model-architecture)
+1. [Usage](#usage)
+
+__
 
 ## Data
 
@@ -14,6 +23,8 @@ The dataset is organized into the following directories:
 - **`data/external/background`**: Contains 10-second clips of background noise from various environments.
 
 Each recording contains a single word or background noise.
+
+___
 
 ## Spectrogram
 
@@ -29,6 +40,8 @@ It visualizes the frequencies present in the audio signal over time, calculated 
 - **Output of the Model**:
   - Number of units: 1375
   - The model predicts for each of the 1375 time steps whether the trigger word "activate" was recently said.
+
+___
 
 ## Generating a Single Training Example
 
@@ -46,16 +59,7 @@ Labels $y^{\langle t \rangle}$ indicate whether the trigger word "activate" has 
 - For each inserted "activate" clip, update the labels for 50 consecutive time steps after the end of the "activate" clip to 1.
 - This means the label for time steps immediately following the end of the "activate" clip is set to 1, indicating that the trigger word was recently spoken.
 
-#### Example
-
-Suppose you have a 10-second background clip, and an "activate" clip ends at the 5-second mark:
-- **Convert 5 seconds into time steps**:
-  - Given that 10 seconds correspond to 1375 time steps, 5 seconds correspond to timestep 687 (`int(1375 * (5 / 10))`).
-- **Set Labels**:
-  - Set $y^{\langle 688 \rangle}$ to $y^{\langle 737 \rangle}$ to 1, covering the 50 consecutive time steps after the end of the "activate" clip.
-
-This method ensures that the training examples are varied and represent real-world scenarios where the trigger word might be spoken among other background noises or random words. It also helps to balance the training data by providing consistent labels for detection.
-
+___
 
 
 ## Model Architecture
