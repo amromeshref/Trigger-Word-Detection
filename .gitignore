@@ -2,3 +2,9 @@ src/__pycache__
 notebooks/.ipynb_checkpoints
 src/test.py
 data/processed/training_data.npy
+__pycache__
+app.py
+output_me.wav
+output_with_chime.wav
+output.wav
+recorder.py
