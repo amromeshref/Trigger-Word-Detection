@@ -11,6 +11,7 @@ ___
 1. [Spectrogram](#spectrogram)
 1. [Generating a Single Training Example](#generating-a-single-training-example)
 1. [Model Architecture](#model-architecture)
+1. [Installation](#installation)
 1. [Usage](#usage)
 
 ___
@@ -80,14 +81,25 @@ The goal is to build a network that ingests a spectrogram and outputs a signal w
   
 ___
 
+## Installation
+
+1. Create a new environment with a 3.7 Python version.
+1. Create a directory on your device and navigate to it.
+1. Clone the repository:
+   ```
+   git clone https://github.com/amromeshref/Trigger-Word-Detection.git
+   ```
+1. Navigate to the Trigger-Word-Detection directory.
+   ```
+   cd Trigger-Word-Detection
+   ```
+1. Type the following command to install the requirements file using pip:
+    ```
+    pip install -r requirements.txt
+    ```
+___
+
 ## Usage
-
-1. **Prepare the Data**: Organize the audio files into their respective directories.
-2. **Generate Spectrograms**: Convert audio files into spectrogram representations.
-3. **Synthesize Training Examples**: Create and label training examples using the provided process.
-4. **Train the Model**: Use the synthesized and labeled data to train the sequence model.
-5. **Evaluate and Test**: Assess the model's performance on validation and test datasets.
-
 
 ## Requirements
 
