@@ -57,9 +57,8 @@ To create a single training example:
 
 Labels $y^{\langle t \rangle}$ indicate whether the trigger word "activate" has recently been spoken:
 
-- The label $y^{\langle t \rangle}$ is set to 0 for all time steps, as it does not contain "activate".
-- For each inserted "activate" clip, update the labels for 50 consecutive time steps after the end of the "activate" clip to 1.
-- This means the label for time steps immediately following the end of the "activate" clip is set to 1, indicating that the trigger word was recently spoken.
+- The label $y^{\langle t \rangle}$ is set to 0 for all time steps that do not contain the word "activate".
+- For each inserted "activate" clip, the labels are set to 1 for 50 consecutive time steps after the end of the "activate" clip, indicating that the trigger word was recently spoken.
 
 ___
 
