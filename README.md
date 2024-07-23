@@ -119,9 +119,4 @@ modified_audio.export("modified_audio.wav", format="wav")
 ```
 
 
-## Requirements
-
-- Python 3.x
-- Required libraries: (List any additional libraries or dependencies)
-
 
